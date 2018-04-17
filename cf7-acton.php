@@ -6,6 +6,10 @@ Description: Provides ActOn Integration with Contact Form 7
 Version: 0.5
 */
 
+/*
+Implemented via details on:
+https://university.act-on.com/User_Guides/Inbound_Marketing/Landing_Pages_and_Forms/Working_with_Forms/Publishing_Forms/15_Integrating_an_Act-On_Form_External_Post_with_WordPress#Contact_Form_7
+*/
 new CF7Acton();
 class CF7Acton{
 	protected static $script_included = false;
