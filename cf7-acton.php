@@ -69,7 +69,7 @@ class CF7Acton{
 		$wpcf7 = WPCF7_ContactForm::get_current();
 		$FORM_ID = $wpcf7->id();
 		
-		$m = get_post_meta($ACTON_FORM_ID, 'cf7ActOn', true);
+		$m = get_post_meta($FORM_ID, 'cf7ActOn', true);
 		if( empty($m) ){
 			return;
 		}
@@ -78,7 +78,7 @@ class CF7Acton{
 		$ACCOUNT_ID		= $m['account_id'];
 		$DOMAIN			= $m['domain'];
 		
-		if( !empty($FORM_ID) && !empty($ACCOUNT_ID) && !empty($DOMAIN) ){
+		if( !empty($ACTON_FORM_ID) && !empty($ACCOUNT_ID) && !empty($DOMAIN) ){
 			?>
 			<?php if(!self::$script_included) : self::$script_included=true; ?>
 			<script src="//a11058.actonservice.com/cdnr/67/acton/attachment/11058/f-008b/1/-/-/-/-/wpcf7byID.js"></script>
