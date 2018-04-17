@@ -17,7 +17,9 @@ class CF7Acton{
 	}
 	
 	public function form_html($html){		
-		return $html.$this->render_script();
+		$script = $this->render_script();
+		$html = $html . $script;
+		return $html;
 	}
 	
 	public function save_form($form){
@@ -66,6 +68,7 @@ class CF7Acton{
 	}
 	
 	public function render_script(){
+		
 		$wpcf7 = WPCF7_ContactForm::get_current();
 		$FORM_ID = $wpcf7->id();
 		
@@ -78,17 +81,22 @@ class CF7Acton{
 		$ACCOUNT_ID		= $m['account_id'];
 		$DOMAIN			= $m['domain'];
 		
+		ob_start();
 		if( !empty($ACTON_FORM_ID) && !empty($ACCOUNT_ID) && !empty($DOMAIN) ){
 			?>
 			<?php if(!self::$script_included) : self::$script_included=true; ?>
 			<script src="//a11058.actonservice.com/cdnr/67/acton/attachment/11058/f-008b/1/-/-/-/-/wpcf7byID.js"></script>
 			<?php endif; ?>
-			<script>document.querySelector("form[action*='<?=esc_attr($FORM_ID)?>']").addEventListener('submit', function(event){event.preventDefault(); var divId = document.querySelector("div[id*='<?=$FORM_ID?>']").getAttribute("id");processwpcf7("<?=$ACCOUNT_ID?>", "<?=$ACTON_FORM_ID?>", "<?=$DOMAIN?>", divId, ""),false});</script>
+			<script>
+				document.querySelector("form[action*='<?=esc_attr($FORM_ID)?>']").addEventListener('submit', function(event){event.preventDefault(); 
+				var divId = document.querySelector("div[id*='<?=$FORM_ID?>']").getAttribute("id");processwpcf7("<?=$ACCOUNT_ID?>", "<?=$ACTON_FORM_ID?>", "<?=$DOMAIN?>", divId, ""),false});
+			</script>
 			<?php 
 		}
 		else{
 			echo "<!-- No CF7 ActOn Settings Found -->";
 		}
+		return ob_get_clean();
 	}	
 }
 
