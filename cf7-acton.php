@@ -21,7 +21,7 @@ class CF7Acton{
 	}
 	
 	public function save_form($form){
-		$form_id = $form->id;
+		$form_id = $form->id();
 		if( !empty($_POST['acton_account_id']) ){			
 			$data = [
 				'account_id'=> $_POST['acton_account_id'],
@@ -42,8 +42,13 @@ class CF7Acton{
 	
 	public function render_panel(){
 		$wpcf7 = WPCF7_ContactForm::get_current();
-		$m = get_post_meta($wpcf7->id, 'cf7ActOn', true);
-		
+		$m = get_post_meta($wpcf7->id(), 'cf7ActOn', true);
+		$defaults = [
+			'account_id'=>'',
+			'form_id'	=>'',
+			'domain'	=>'',
+		];
+		$m = shortcode_atts( $defaults, $m);#Not in a shortcode, but same function can be used
 		?>
 		<h2>ActOn Form Information</h2>
 		<table>
@@ -62,14 +67,14 @@ class CF7Acton{
 	
 	public function render_script(){
 		$wpcf7 = WPCF7_ContactForm::get_current();
-		$ACTON_FORM_ID	= $wpcf7->id;
+		$FORM_ID = $wpcf7->id();
 		
-		$m = get_post_meta($wpcf7->id, 'cf7ActOn', true);
+		$m = get_post_meta($ACTON_FORM_ID, 'cf7ActOn', true);
 		if( empty($m) ){
 			return;
 		}
 		
-		$FORM_ID		= $m['form_id'];
+		$ACTON_FORM_ID	= $m['form_id'];
 		$ACCOUNT_ID		= $m['account_id'];
 		$DOMAIN			= $m['domain'];
 		
